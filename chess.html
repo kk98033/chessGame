@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://web.nttu.edu.tw/s32/style/style.css">
+    <link rel="stylesheet" href="https://web.nttu.edu.tw/s32/style/form.css">
+
+    <link rel="stylesheet" href="/assets/css/chessboard.css">
+    <link rel="stylesheet" href="/assets/css/chessboardmin.css">
+    <link rel="stylesheet" href="/assets/css/chess.css">
+    <link rel="stylesheet" href="/assets/css/chat.css">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div id="loader" class="loader"></div>
+    <div id="loaderBG" class="loaderBG">
+        <div>
+            Room ID: <span id="room-id-title" class="text-success"></span>
+        </div>
+        <div>
+            Waiting for a player to join...
+        </div>
+    </div>
+
+    <div id="gameover_window"></div>
+
+    <!-- <button id="startBtn">Start Position</button> -->
+    <section class="boardSection">
+        <div class="boardContainer">
+            <div id="board" style="width: 400px"></div>
+            <div class="clockContainer px-4">
+                <div class="gameContainer self">
+                    <div class="playerData">
+                        <!-- <img class="playerAvatar" src="https://web.nttu.edu.tw/s32/user_uploads/test001.jpg" alt="">
+                        <div class="playerName">name</div> -->
+                    </div>
+                    <div class="timerContainer">
+                        <div id="self_timer_min" class="timer">00</div>
+                        <div class="timer">:</div>
+                        <div id="self_timer_sec" class="timer">00</div>
+                    </div>
+                    <!-- <h1 style="margin: 0;padding: 0;">YOU</h1> -->
+                    <div class="m-0">
+                        <div class="h3 p-0">YOU</div>
+                    </div>
+                </div>
+
+                <div class="gameContainer">
+                    <div class="playerData">
+                        <!-- <img class="playerAvatar" src="https://web.nttu.edu.tw/s32/check_mate.jpg" alt="">
+                        <div class="playerName">name</div> -->
+                    </div>
+                    <div class="timerContainer">
+                        <div id="opponent_timer_min" class="timer">00</div>
+                        <div class="timer">:</div>
+                        <div id="opponent_timer_sec" class="timer">00</div>
+                    </div>
+                    <!-- <h1 style="margin: 0;padding: 0;">OPPONENT</h1> -->
+                    <div class="m-0">
+                        <div class="h3 p-0">OPPONENT</div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="chatContainer">
+            <div class="title">Chat</div>
+            <div id="mainChat" class="mainChat"></div>
+            <div class="inputCntainer">
+                <form id="form" action="#">
+                    <input id="input" autocomplete="off" />
+                    <button id="msgBtn">Send</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#game-over-modal">
+        Launch demo modal
+    </button> -->
+    
+    <!-- <a onclick="showModal('a', 'lolll')">show modal</a> -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="game-over-modal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="gameOverModal" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="gameOverModal">GAME OVER</h5>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+                <div class="modal-body">
+                    <h3 id="modal-content">
+                        <span class="text-success">___</span> WINS by<br> 
+                        <span class="text-info">___</span>
+                    </h3>
+                </div>
+            <div class="modal-footer">
+            <button id="close-btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button id="continue-btn" type="button" class="btn btn-primary">Continue</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <label>Status:</label>
+    <div id="status"></div>
+    <label>FEN:</label>
+    <div id="fen"></div>
+    <label>PGN:</label>
+    <div id="pgn"></div>
+
+    <!-- <input id="console" type="text">
+    <input id="consoleBtn" type="submit">
+    <input id="reconnect" type="submit">
+    
+    <div class="promote-container">
+        <img class="white-1e1d7 promote-pieces q" onclick="Select('q')" src="/img/chesspieces/wikipedia/wQ.png" alt="">
+        <img class="black-3c85d promote-pieces r" onclick="Select('r')" src="/img/chesspieces/wikipedia/wR.png" alt="">
+        <img class="white-1e1d7 promote-pieces b" onclick="Select('b')" src="/img/chesspieces/wikipedia/wB.png" alt="">
+        <img class="black-3c85d promote-pieces n" onclick="Select('n')" src="/img/chesspieces/wikipedia/wN.png" alt="">
+    </div> -->
+
+    <script src="assets/js/game_over_modal.js"></script>
+    <script>
+        // display room
+        $('#room-id-title').text(getUrlParameter('room'))
+    </script>
+
+    <!-- JS -->
+    <script src="/assets/js/chessboard.js"></script>
+    <script src="/assets/js/chessboardmin.js"></script>
+
+    <script src="/assets/js/chat.js" type="module"></script>
+    <script src="/assets/js/timer.js"></script>
+
+    <script src="/assets/js/game.js" type="module"></script>
+    <script type="module">
+        import { selectPromotePiece } from '/assets/js/game.js'
+        window.Select = selectPromotePiece
+    </script>
+
+    <!-- Socket.io -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io()
+    </script>
+</body>
+</html>

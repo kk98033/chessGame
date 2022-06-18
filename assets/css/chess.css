@@ -1,0 +1,114 @@
+.loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 999;
+    width: 120px;
+    height: 120px;
+    margin: -76px 0 0 -76px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    -webkit-animation: spin 1.5s linear infinite;
+    animation: spin 1.5s linear infinite;
+}
+
+.loaderBG {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.365);
+    z-index: 100;
+
+    color: rgb(225, 225, 225);
+    font-size: 80px;
+    text-align: center;
+    font-weight: bold;
+}
+  
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+/* Add animation to "page content" */
+.animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+}
+  
+@-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+    from{ bottom:-100px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
+}
+
+@media (max-width: 650px) {
+    .loaderBG {
+        font-size: 50px;
+    }
+}
+
+
+/* END SCREEN */
+.loaderBG.end {
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
+.endWindow {
+    position: fixed;
+    z-index: 100;
+    width: 700px;
+    height: 500px;
+    /* background-color: #8a84ff; */
+    border-radius: 50px;
+
+    left: 25%;
+    top: 10%;
+}
+
+.end_top {
+    /* width: par; */
+    height: 100px; /* as the half of the width */
+    background-color: rgb(31, 2, 129);
+    border-top-left-radius: 50px;  /* 100px of height + 10px of border */
+    border-top-right-radius: 50px; /* 100px of height + 10px of border */
+    border-bottom: 0;
+    text-align: center;
+}
+
+.end_title {
+    font-size: 90px;
+    font-weight: bold;
+    color: #8a84ff;
+}
+
+.end_content {
+    font-size: 50px;
+    text-align: center;
+    color: white;
+}
+
+.endLink {
+    color: rgb(31, 2, 129);
+}
+
+.endLink:hover {
+    color: rgb(75, 46, 172);
+}
